@@ -1,7 +1,9 @@
 # Instella-T2I: Pushing the Limits of 1D Discrete Latent Space Image Generation
 
 <div align="center">
-  <a href="https://arxiv.org/abs/2506.21022"><img src="https://img.shields.io/static/v1?label=Arxiv&message=Instella-T2I&color=red&logo=arxiv"></a> &ensp;
+  <a href="https://arxiv.org/abs/2506.21022"><img src="https://img.shields.io/static/v1?label=Instella-T2I&message=ArXiv&color=red&logo=arxiv"></a> &ensp;
+  <a href="https://huggingface.co/amd/Instella-T2I"><img src="https://img.shields.io/static/v1?label=Instella-T2I&message=HuggingFace&color=green"></a> &ensp;
+  <a href="https://rocm.blogs.amd.com/artificial-intelligence/instella-t2i/README.html"><img src="https://img.shields.io/static/v1?label=Instella-T2I&message=Blog&color=yellow"></a> &ensp;
 </div>
 
 <p align="center" border-radius="10px">
