@@ -1,3 +1,5 @@
+# Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
+
 import os, shutil, math, sys
 sys.path.insert(0, 'packages')
 import logging, gc, time

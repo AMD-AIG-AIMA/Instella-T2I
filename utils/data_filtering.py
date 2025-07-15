@@ -1,3 +1,5 @@
+# Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
+
 import json
 import base64, binascii
 from PIL import Image

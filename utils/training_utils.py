@@ -1,3 +1,5 @@
+# Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
+
 from torch.distributions import LogisticNormal
 import torch
 import json

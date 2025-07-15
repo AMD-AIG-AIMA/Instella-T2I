@@ -1,3 +1,4 @@
+# Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
 
 import torch
 import torch.nn as nn

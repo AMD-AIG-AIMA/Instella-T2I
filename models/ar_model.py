@@ -1,4 +1,4 @@
-
+# Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
 
 from typing import Any, Dict, List, Optional, Union
 import math

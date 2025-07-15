@@ -1,3 +1,5 @@
+# Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
+
 # Adapted from https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/modeling_llama.py
 
 import math
