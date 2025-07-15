@@ -31,17 +31,11 @@ pip install -r requirements.txt
 
 Using provide `test_diff.py` and `test_ar.py` to run image generation in interactive mode for the diffusion and AR models.
 
-To download the model, run:
-```bash
-git lfs install # run apt install git-lfs if lfs is not installed
-git clone https://huggingface.co/amd/Instella-T2I checkpoints
-```
-
-Please make sure model checkpoints are placed under the `checkpoints` folder, otherwise please specify `--ckpt_path=YOUR_MODEL_PATH`.
+The inference scripts will automatically download the checkpoints to path specified by `--ckpt_path`.
 
 ```bash
-python test_diff.py 
-python test_ar.py 
+python test_diff.py --ckpt_path DESIRED_PATH_TO_MODELS
+python test_ar.py --ckpt_path DESIRED_PATH_TO_MODELS
 ```
 
 #### Specifying hyperparameters
@@ -49,6 +43,7 @@ To specify hyperparameters, run:
 
 ```bash
 python test_diff.py \
+    --ckpt_path DESIRED_PATH_TO_MODELS \
     --cfg_scale 9.0 \
     --temp 0.8 \
     --num_steps 50 \

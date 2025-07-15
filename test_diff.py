@@ -13,6 +13,9 @@ import gc
 from mmengine.config import Config
 import argparse
 from safetensors.torch import load_file as safe_load_file
+from huggingface_hub import snapshot_download
+
+# Download the model to a specific directory
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Testing configuration for Instella diffusion model.")
@@ -35,6 +38,14 @@ def parse_args():
 def main():
 
     args = parse_args()
+
+    # Model download
+    local_path = snapshot_download(
+            repo_id="amd/Instella-T2I",
+            local_dir=args.ckpt_path, 
+        )
+
+    print("Model downloaded to:", local_path)
 
     model_config = Config.fromfile(args.config)
     bae_config = Config.fromfile(model_config.bae_config)

@@ -36,6 +36,14 @@ def main():
 
     args = parse_args()
 
+    # Model download
+    local_path = snapshot_download(
+            repo_id="amd/Instella-T2I",
+            local_dir=args.ckpt_path, 
+        )
+
+    print("Model downloaded to:", local_path)
+
     model_config = Config.fromfile(args.config)
     bae_config = Config.fromfile(model_config.bae_config)
     bae_ckpt = model_config.bae_ckpt
@@ -65,7 +73,7 @@ def main():
 
 
 
-    ckpt = torch.load(args.ckpt_path, map_location='cpu')['module']
+    ckpt = torch.load(f'{args.ckpt_path}/ar.pt', map_location='cpu')['module']
     model.load_state_dict(ckpt)
 
     bae = BAE_Model(bae_config)
