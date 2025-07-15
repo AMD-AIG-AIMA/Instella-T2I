@@ -1,0 +1,36 @@
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Transformers and Hugging Face ecosystem
+transformers>=4.30.0
+diffusers>=0.20.0
+safetensors>=0.3.0
+accelerate>=0.20.0
+
+# Image processing
+Pillow>=9.0.0
+numpy>=1.21.0
+
+# Configuration and utilities
+mmengine>=0.7.0
+tqdm>=4.64.0
+
+# Optional for performance
+bitsandbytes>=0.41.0
+
+# Logging and monitoring
+wandb>=0.15.0
+
+# Additional utilities
+pathlib
+argparse
+logging
+gc
+time
+os
+sys
+shutil
+math
+warnings
+json
+glob
