@@ -51,6 +51,6 @@ resolution=512
 
 num_tkns = 128
 
-bae_config = '/home/zewang12/code/1d_tokenizer/bit_v2/configs/bae_v1_1024_ms.py'
-bae_ckpt = '/mnt/blob/zew/outputs/1D_AE/logs_ms_fzenc_s2/checkpoint-112500/model.safetensors'
+bae_config = 'configs/bae_config.py'
+bae_ckpt = 'bae/model.safetensors'
 bae_scale = 1024

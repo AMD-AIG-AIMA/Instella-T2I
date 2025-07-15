@@ -64,7 +64,7 @@ def main():
 
     model.eval()
 
-    ckpt = torch.load(args.ckpt_path, map_location='cpu')['module']
+    ckpt = torch.load(f'{args.ckpt_path}/diffusion.pt', map_location='cpu')['module']
     model.load_state_dict(ckpt)
 
     bae = BAE_Model(bae_config)
