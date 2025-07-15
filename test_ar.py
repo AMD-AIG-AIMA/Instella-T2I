@@ -13,6 +13,7 @@ import gc
 from mmengine.config import Config
 import argparse
 from safetensors.torch import load_file as safe_load_file
+from huggingface_hub import snapshot_download
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Testing configuration for Instella diffusion model.")
