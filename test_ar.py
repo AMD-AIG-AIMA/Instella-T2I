@@ -132,8 +132,8 @@ def main():
                 image.save(f'results/{img_size}_{num_sampling_steps}_{guidance_scale}_{temp}_{name}.jpg')
                 sp = te - ts
             print(f'Generation finished in {sp:.2f}s')
-        except:
-            print('skipping')
+        except Exception as e:
+            print(f'Skipping due to error: {e}')
             continue
 
 
