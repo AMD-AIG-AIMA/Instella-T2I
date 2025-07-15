@@ -439,7 +439,7 @@ class BAE_Model(ModelMixin, ConfigMixin, PeftAdapterMixin, FromOriginalModelMixi
         )
         
         self.to_pixel = nn.Linear(config.decoder_head_dim * config.decoder_num_heads, config.patch_size*config.patch_size*config.in_channels)
-        self.quantizer = BinaryQuantizer(config.codebook_size, latent_dim, config.num_latent_tkns, train_temp=config.train_temp)
+        self.quantizer = BinaryQuantizer(config.codebook_size, latent_dim, config.num_latent_tkns, train_temp=config.get('train_temp', 0.1))
         self.in_channels = config.in_channels
     
     def set_scale(self, scale):
@@ -469,13 +469,10 @@ class BAE_Model(ModelMixin, ConfigMixin, PeftAdapterMixin, FromOriginalModelMixi
         hidden_states = torch.einsum("b l n, n d -> b l d", hidden_states, self.quantizer.embed)
         hidden_states = self.decoder(hidden_states, H, W).pop('hidden_states')
         N = hidden_states.shape[0]
-        if self.conv_topix:
-            output = self.to_pixel(hidden_states)
 
-        else:
-            hidden_states = self.to_pixel(hidden_states)
-            hidden_states = hidden_states.view(N, H, W, self.configs.patch_size, self.configs.patch_size, self.in_channels)
-            output = rearrange(hidden_states, 'n h w a b c-> n c (h a) (w b)')
+        hidden_states = self.to_pixel(hidden_states)
+        hidden_states = hidden_states.view(N, H, W, self.configs.patch_size, self.configs.patch_size, self.in_channels)
+        output = rearrange(hidden_states, 'n h w a b c-> n c (h a) (w b)')
         return output
         
     def forward(
@@ -483,8 +480,7 @@ class BAE_Model(ModelMixin, ConfigMixin, PeftAdapterMixin, FromOriginalModelMixi
         hidden_states: torch.Tensor,
         H: int = None,
         W: int = None,
-        return_dict: bool = False,
-    ) -> Union[torch.FloatTensor, Transformer2DModelOutput]:
+    ):
 
         N, C, h, w = hidden_states.shape
         if H is None:

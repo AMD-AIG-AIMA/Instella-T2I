@@ -1,8 +1,6 @@
 # Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
 
-import torch
-
-import gc
+import torch, os
 
 from models.ar_model import Instella_AR_Model, BinaryAR
 
@@ -97,6 +95,7 @@ def main():
 
     binary_ar = BinaryAR(model_config.num_tkns)
 
+    os.makedirs('results', exist_ok=True)
 
     while True:
        

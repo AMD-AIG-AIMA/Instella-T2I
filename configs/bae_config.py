@@ -1,5 +1,5 @@
 # ======================================================
-# Example training config for Instella Diffusion Model
+# Example testing config for Instella 1D tokenizer Model
 # ======================================================
 
 #### Model configs
@@ -18,3 +18,4 @@ decoder_num_heads=16
 upsample_idx=[7]
 
 num_latent_tkns=128
+codebook_size=64

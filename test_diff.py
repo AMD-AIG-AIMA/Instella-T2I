@@ -1,8 +1,6 @@
 # Modification Copyright© 2025 Advanced Micro Devices, Inc. All rights reserved.
 
-import torch
-
-import gc
+import torch, os
 
 from models.diff_model import Instella_Binary_Diff, BinaryDiffusion
 
@@ -40,7 +38,7 @@ def main():
 
     model_config = Config.fromfile(args.config)
     bae_config = Config.fromfile(model_config.bae_config)
-    bae_ckpt = model_config.bae_ckpt
+    bae_ckpt = f'{args.ckpt_path}/bae/model.safetensors'
 
     weight_dtype = torch.bfloat16
 
@@ -96,6 +94,7 @@ def main():
 
     binary_diffusion = BinaryDiffusion(model_config.num_tkns, bae_config.codebook_size, weight_dtype)
 
+    os.makedirs('results', exist_ok=True)
 
     while True:
        
@@ -103,30 +102,30 @@ def main():
         if text == 'exit':
             exit()
 
-        try:
-            with torch.no_grad():
-                ts = time.time()
-                z = binary_diffusion.sample(model, tokenizer, llm, [text], num_sampling_steps=num_sampling_steps, guidance_scale=guidance_scale, temp=temp, rho=args.rho)
-                z = z.to(weight_dtype)
+        # try:
+        with torch.no_grad():
+            ts = time.time()
+            z = binary_diffusion.sample(model, tokenizer, llm, [text], num_sampling_steps=num_sampling_steps, guidance_scale=guidance_scale, temp=temp, rho=args.rho)
+            z = z.to(weight_dtype)
 
-                samples = bae.decode(z, img_size//16, img_size//16)
-                te = time.time()
+            samples = bae.decode(z, img_size//16, img_size//16)
+            te = time.time()
 
-                samples = samples[0].float()
+            samples = samples[0].float()
 
-                samples = torch.clamp(samples, -1.0, 1.0)
-                samples = (samples + 1) / 2
+            samples = torch.clamp(samples, -1.0, 1.0)
+            samples = (samples + 1) / 2
 
-                samples = samples.permute(1, 2, 0).mul_(255).cpu().numpy()
-                image = Image.fromarray(samples.astype(np.uint8))
-                name = text.split(' ')[:5]
-                name = '_'.join(name)
-                image.save(f'results/{img_size}_{num_sampling_steps}_{guidance_scale}_{temp}_{name}.jpg')
-                sp = te - ts
-            print(f'Generation finished in {sp:.2f}s')
-        except:
-            print('skipping')
-            continue
+            samples = samples.permute(1, 2, 0).mul_(255).cpu().numpy()
+            image = Image.fromarray(samples.astype(np.uint8))
+            name = text.split(' ')[:5]
+            name = '_'.join(name)
+            image.save(f'results/{img_size}_{num_sampling_steps}_{guidance_scale}_{temp}_{name}.jpg')
+            sp = te - ts
+        print(f'Generation finished in {sp:.2f}s')
+        # except:
+        #     print('skipping')
+        #     continue
 
 
 if __name__ == "__main__":
