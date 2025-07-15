@@ -2,7 +2,7 @@ torchvision>=0.15.0
 torchaudio>=2.0.0
 
 # Transformers and Hugging Face ecosystem
-transformers>=4.30.0
+transformers>=4.53.1
 diffusers>=0.20.0
 safetensors>=0.3.0
 accelerate>=0.20.0
