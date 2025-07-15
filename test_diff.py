@@ -113,30 +113,30 @@ def main():
         if text == 'exit':
             exit()
 
-        # try:
-        with torch.no_grad():
-            ts = time.time()
-            z = binary_diffusion.sample(model, tokenizer, llm, [text], num_sampling_steps=num_sampling_steps, guidance_scale=guidance_scale, temp=temp, rho=args.rho)
-            z = z.to(weight_dtype)
+        try:
+            with torch.no_grad():
+                ts = time.time()
+                z = binary_diffusion.sample(model, tokenizer, llm, [text], num_sampling_steps=num_sampling_steps, guidance_scale=guidance_scale, temp=temp, rho=args.rho)
+                z = z.to(weight_dtype)
 
-            samples = bae.decode(z, img_size//16, img_size//16)
-            te = time.time()
+                samples = bae.decode(z, img_size//16, img_size//16)
+                te = time.time()
 
-            samples = samples[0].float()
+                samples = samples[0].float()
 
-            samples = torch.clamp(samples, -1.0, 1.0)
-            samples = (samples + 1) / 2
+                samples = torch.clamp(samples, -1.0, 1.0)
+                samples = (samples + 1) / 2
 
-            samples = samples.permute(1, 2, 0).mul_(255).cpu().numpy()
-            image = Image.fromarray(samples.astype(np.uint8))
-            name = text.split(' ')[:5]
-            name = '_'.join(name)
-            image.save(f'results/{img_size}_{num_sampling_steps}_{guidance_scale}_{temp}_{name}.jpg')
-            sp = te - ts
-        print(f'Generation finished in {sp:.2f}s')
-        # except:
-        #     print('skipping')
-        #     continue
+                samples = samples.permute(1, 2, 0).mul_(255).cpu().numpy()
+                image = Image.fromarray(samples.astype(np.uint8))
+                name = text.split(' ')[:5]
+                name = '_'.join(name)
+                image.save(f'results/{img_size}_{num_sampling_steps}_{guidance_scale}_{temp}_{name}.jpg')
+                sp = te - ts
+            print(f'Generation finished in {sp:.2f}s')
+        except Exception as e:
+            print(f'Skipping due to error: {e}')
+            continue
 
 
 if __name__ == "__main__":
